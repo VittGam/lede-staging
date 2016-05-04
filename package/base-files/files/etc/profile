@@ -9,10 +9,17 @@ fgrep -sq '/ overlay ro,' /proc/mounts && {
 export PATH="%PATH%"
 export HOME=$(grep -e "^${USER:-root}:" /etc/passwd | cut -d ":" -f 6)
 export HOME=${HOME:-/root}
-export PS1='\u@\h:\w\$ '
+export PS1='\u@\h \w \$ '
+
+# Uncomment the following line if you want a colored prompt:
+#export PS1='\[\033[01;33m\]\u\[\033[01;34m\]@\[\033[01;32m\]\h \[\033[01;31m\]\w \[\033[01;35m\]\$ \[\033[00m\]'
+
+[ "$TERM" = "xterm" ] && export PS1='\[\e]0;\u@\h: \w\a\]'$PS1
 
 [ -x /bin/more ] || alias more=less
 [ -x /usr/bin/vim ] && alias vi=vim || alias vim=vi
+
+alias ll='ls -alF --color=auto'
 
 [ -z "$KSH_VERSION" -o \! -s /etc/mkshrc ] || . /etc/mkshrc
 
